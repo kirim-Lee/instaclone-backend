@@ -21,6 +21,9 @@
   },
   "homepage": "https://github.com/kirim-Lee/instaclone-backend#readme",
   "dependencies": {
+    "@graphql-tools/load-files": "^6.5.2",
+    "@graphql-tools/merge": "^8.2.1",
+    "@graphql-tools/schema": "^8.3.1",
     "@prisma/client": "^3.6.0",
     "apollo-server": "^3.5.0",
     "graphql": "^15.7.2"
