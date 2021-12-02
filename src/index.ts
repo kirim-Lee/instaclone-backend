@@ -1,23 +1,11 @@
+require('dotenv').config();
+
 import { ApolloServer } from 'apollo-server';
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
-import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
-import { loadFilesSync } from '@graphql-tools/load-files';
-import { makeExecutableSchema } from '@graphql-tools/schema';
-
-const typesArray = mergeTypeDefs(
-  loadFilesSync(`${__dirname}/**/*.typeDefs.ts`)
-);
-const resolversArray = mergeResolvers(
-  loadFilesSync(`${__dirname}/**/*.{queries,mutations}.ts`) as any
-);
-
-const schema = makeExecutableSchema({
-  typeDefs: typesArray,
-  resolvers: resolversArray,
-});
+import schema from './schema';
 
 const server = new ApolloServer({
   schema,
@@ -28,6 +16,8 @@ const server = new ApolloServer({
   ],
 });
 
-server.listen().then(({ url }: { url: string }) => {
+const PORT = process.env.PORT;
+
+server.listen(PORT).then(({ url }: { url: string }) => {
   console.log(`🚀  Server ready at ${url}`);
 });
