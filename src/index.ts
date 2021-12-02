@@ -26,7 +26,6 @@ const resolvers = {
   Query: {
     books: () => books,
     book: (_: any, { title }: { title: string }) => {
-      console.log(title);
       return books.find((book) => book.title === title);
     },
   },
