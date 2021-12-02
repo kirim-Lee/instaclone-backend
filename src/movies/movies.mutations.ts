@@ -1,11 +1,20 @@
 import client from '../client';
 
+interface IMovie {
+  id: number;
+  title: string;
+  year: number;
+  genre?: string;
+}
+
 export default {
   Mutation: {
-    createMovie: (_, { title, year, genre }) =>
+    createMovie: (_: never, { title, year, genre }: IMovie) =>
       client.movie.create({ data: { title, year, genre } }),
-    deleteMovie: (_, { id }) => client.movie.delete({ where: { id } }),
-    updateMovie: (_, { id, year }) =>
-      client.movie.update({ where: { id }, data: { year } }),
+    deleteMovie: (_: never, { id }: IMovie) =>
+      client.movie.delete({ where: { id } }),
+    updateMovie: (_: never, { id, year }: IMovie) => {
+      return client.movie.update({ where: { id }, data: { year } });
+    },
   },
 };

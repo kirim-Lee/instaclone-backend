@@ -7,8 +7,8 @@
     "jsx": "preserve", // tsx 파일을 jsx로 어떻게 컴파일할 것인지 'preserve', 'react-native', 'react'
     "declaration": true, //컴파일시 .d.ts 파일도 자동으로 함께생성 (현재쓰는 모든 타입이 정의된 파일)
     // "outFile": "./", //모든 ts파일을 js파일 하나로 컴파일해줌 (module이 none, amd, system일 때만 가능)
-    "outDir": "./", //js파일 아웃풋 경로바꾸기
-    "rootDir": "./", //루트경로 바꾸기 (js 파일 아웃풋 경로에 영향줌)
+    // "outDir": "./", //js파일 아웃풋 경로바꾸기
+    // "rootDir": "./", //루트경로 바꾸기 (js 파일 아웃풋 경로에 영향줌)
     "removeComments": true, //컴파일시 주석제거
 
     "strict": true, //strict 관련, noimplicit 어쩌구 관련 모드 전부 켜기

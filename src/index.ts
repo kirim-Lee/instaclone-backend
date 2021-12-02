@@ -5,14 +5,13 @@ import {
 } from 'apollo-server-core';
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
-import path from 'path';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 
 const typesArray = mergeTypeDefs(
   loadFilesSync(`${__dirname}/**/*.typeDefs.ts`)
 );
 const resolversArray = mergeResolvers(
-  loadFilesSync(path.join(__dirname, '**/*.{queries,mutations}.ts')) as any
+  loadFilesSync(`${__dirname}/**/*.{queries,mutations}.ts`) as any
 );
 
 const schema = makeExecutableSchema({
