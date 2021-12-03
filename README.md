@@ -2,7 +2,7 @@
 
 instaclone backend
 
-## User:
+## User
 
 - [ ] 계정생성
 - [ ] 프로필보기
