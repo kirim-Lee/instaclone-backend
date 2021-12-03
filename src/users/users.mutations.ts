@@ -1,6 +1,7 @@
 import { Prisma, User } from '@prisma/client';
 import client from '../client';
 import { comparePassword, hashPassword } from '../utils/hash';
+import { sign } from '../utils/sign';
 
 export default {
   Mutation: {
@@ -48,9 +49,14 @@ export default {
           throw new Error('incorrect password');
         }
 
-        // TODO: return webtoken
+        // webtoken
+        const token = sign(user.id);
 
-        return { ok: true };
+        if (!token) {
+          throw new Error("token couldn't be created");
+        }
+
+        return { ok: true, token };
       } catch (e) {
         return { ok: false, error: e instanceof Error ? e.message : '' };
       }
