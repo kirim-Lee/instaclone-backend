@@ -16,9 +16,9 @@ const server = new ApolloServer({
       ? ApolloServerPluginLandingPageDisabled()
       : ApolloServerPluginLandingPageGraphQLPlayground(),
   ],
-  context: async ({ req }): Promise<IContext> => {
+  context: async ({ req }): Promise<IContext | null> => {
     const user = await getUser(req.headers['jwt-token']);
-    return { loggedInUser: user };
+    return user && { loggedInUser: user };
   },
 });
 
