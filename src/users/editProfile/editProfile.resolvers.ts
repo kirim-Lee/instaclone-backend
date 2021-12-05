@@ -3,7 +3,11 @@ import { IContext } from '../../@types/common';
 import client from '../../client';
 import { hashPassword } from '../../utils/hash';
 import { protect } from '../../utils/user';
-import { GraphQLUpload, processRequest } from 'graphql-upload';
+import { FileUpload, GraphQLUpload } from 'graphql-upload';
+
+interface Input extends Omit<User, 'avatar'> {
+  avatar?: Promise<FileUpload>;
+}
 
 export default {
   Upload: GraphQLUpload,
@@ -12,11 +16,15 @@ export default {
     editProfile: protect(
       async (
         _: unknown,
-        { password, ...user }: User,
+        { password, avatar, ...user }: Input,
         { loggedInUser }: IContext
       ) => {
         try {
           const hashed = password ? await hashPassword(password) : null;
+
+          const { createReadStream, filename, mimetype, encoding } =
+            (await avatar) || {};
+          console.log(createReadStream, filename, mimetype, encoding);
 
           const updateData: Partial<User> = user;
 
