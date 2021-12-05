@@ -3,8 +3,11 @@ import { IContext } from '../../@types/common';
 import client from '../../client';
 import { hashPassword } from '../../utils/hash';
 import { protect } from '../../utils/user';
+import { GraphQLUpload, processRequest } from 'graphql-upload';
 
 export default {
+  Upload: GraphQLUpload,
+
   Mutation: {
     editProfile: protect(
       async (
