@@ -6,7 +6,7 @@ const typesArray = mergeTypeDefs(
   loadFilesSync(`${__dirname}/**/*.typeDefs.ts`)
 );
 const resolversArray = mergeResolvers(
-  loadFilesSync(`${__dirname}/**/*.{queries,mutations}.ts`) as any
+  loadFilesSync(`${__dirname}/**/*.resolvers.ts`) as any
 );
 
 const schema = makeExecutableSchema({
