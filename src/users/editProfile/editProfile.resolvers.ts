@@ -4,6 +4,7 @@ import client from '../../client';
 import { hashPassword } from '../../utils/hash';
 import { protect } from '../../utils/user';
 import { FileUpload, GraphQLUpload } from 'graphql-upload';
+import { createWriteStream } from 'fs';
 
 interface Input extends Omit<User, 'avatar'> {
   avatar?: Promise<FileUpload>;
@@ -22,9 +23,16 @@ export default {
         try {
           const hashed = password ? await hashPassword(password) : null;
 
-          const { createReadStream, filename, mimetype, encoding } =
-            (await avatar) || {};
-          console.log(createReadStream, filename, mimetype, encoding);
+          const file = await avatar;
+
+          if (file) {
+            const filename = `${Date.now()}${file.filename}`;
+            const stream = file.createReadStream();
+            const dest = createWriteStream(
+              `${process.cwd()}/upload/${filename}`
+            );
+            stream.pipe(dest);
+          }
 
           const updateData: Partial<User> = user;
 
