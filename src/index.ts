@@ -5,7 +5,9 @@ import {
   ApolloServerPluginLandingPageGraphQLPlayground,
   ApolloServerPluginLandingPageDisabled,
 } from 'apollo-server-core';
+import { IContext } from './@types/common';
 import schema from './schema';
+import { getUser } from './utils/user';
 
 const server = new ApolloServer({
   schema,
@@ -14,6 +16,10 @@ const server = new ApolloServer({
       ? ApolloServerPluginLandingPageDisabled()
       : ApolloServerPluginLandingPageGraphQLPlayground(),
   ],
+  context: async ({ req }): Promise<IContext> => {
+    const user = await getUser(req.headers['jwt-token']);
+    return { loggedInUser: user };
+  },
 });
 
 const PORT = process.env.PORT;
