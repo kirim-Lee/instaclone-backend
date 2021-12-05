@@ -1,4 +1,3 @@
-import { User } from '@prisma/client';
 import { IContext } from '../@types/common';
 import client from '../client';
 import { verify } from './sign';
