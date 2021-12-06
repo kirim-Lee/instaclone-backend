@@ -23,18 +23,21 @@ export default {
         try {
           const hashed = password ? await hashPassword(password) : null;
 
-          const file = await avatar;
+          const updateData: Partial<User> = user;
 
-          if (file) {
-            const filename = `${Date.now()}${file.filename}`;
+          if (avatar) {
+            const file = await avatar;
+            const filename = `${loggedInUser.id}-${Date.now()}-${
+              file.filename
+            }`;
             const stream = file.createReadStream();
             const dest = createWriteStream(
               `${process.cwd()}/upload/${filename}`
             );
             stream.pipe(dest);
-          }
 
-          const updateData: Partial<User> = user;
+            updateData.avatar = `/avatar/${filename}`;
+          }
 
           if (hashed) {
             updateData.password = hashed;

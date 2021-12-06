@@ -1,8 +1,8 @@
 require('dotenv').config();
 
-const express = require('express');
-import { createServer } from 'http';
+import express from 'express';
 import logger from 'morgan';
+import { createServer } from 'http';
 import { ApolloServer } from 'apollo-server-express';
 import {
   ApolloServerPluginLandingPageGraphQLPlayground,
@@ -22,7 +22,7 @@ const startServer = async () => {
         : ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
     context: async ({ req }): Promise<IContext | null> => {
-      const user = await getUser(req.headers['jwt-token']);
+      const user = await getUser(req.headers['jwt-token'] as string);
       return user && { loggedInUser: user };
     },
   });
