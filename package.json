@@ -4,7 +4,7 @@
   "description": "instaclone backend",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon",
+    "dev": "nodemon --delay 2",
     "migrate": "npx prisma migrate dev",
     "studio": "npx prisma studio",
     "test": "echo \"Error: no test specified\" && exit 1"
