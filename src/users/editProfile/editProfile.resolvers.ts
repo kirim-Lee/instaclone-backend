@@ -3,16 +3,14 @@ import { IContext } from '../../@types/common';
 import client from '../../client';
 import { hashPassword } from '../../utils/hash';
 import { protect } from '../../utils/user';
-import { FileUpload, GraphQLUpload } from 'graphql-upload';
-import { createWriteStream } from 'fs';
+import { FileUpload } from 'graphql-upload';
+import upload from '../../utils/upload';
 
 interface Input extends Omit<User, 'avatar'> {
   avatar?: Promise<FileUpload>;
 }
 
 export default {
-  Upload: GraphQLUpload,
-
   Mutation: {
     editProfile: protect(
       async (
@@ -26,17 +24,9 @@ export default {
           const updateData: Partial<User> = user;
 
           if (avatar) {
-            const file = await avatar;
-            const filename = `${loggedInUser.id}-${Date.now()}-${
-              file.filename
-            }`;
-            const stream = file.createReadStream();
-            const dest = createWriteStream(
-              `${process.cwd()}/upload/${filename}`
-            );
-            stream.pipe(dest);
+            const filename = await upload(avatar, loggedInUser.id.toString());
 
-            updateData.avatar = `/avatar/${filename}`;
+            updateData.avatar = `/static/${filename}`;
           }
 
           if (hashed) {

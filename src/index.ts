@@ -34,7 +34,7 @@ const startServer = async () => {
   const httpServer = createServer(app);
 
   app.use(graphqlUploadExpress());
-  app.use('/avatar', express.static('upload'));
+  app.use('/static', express.static('upload'));
   app.use(logger('tiny'));
 
   server.applyMiddleware({ app });
