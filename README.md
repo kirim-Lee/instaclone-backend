@@ -14,4 +14,4 @@ instaclone backend
 - [x] 팔로워보기
 - [x] 팔로잉보기
 - [x] computed field
-- [ ] 사용자찾기
+- [x] 사용자찾기
