@@ -18,9 +18,9 @@ instaclone backend
 
 ## Photos
 
-- [ ] 사진 업로드
+- [x] 사진 업로드
 - [ ] like/ unlike
-- [ ] 사진 보기
+- [x] 사진 보기
 - [ ] 사진 편집
 - [ ] 좋아요 보기
 - [ ] 피드 보기
