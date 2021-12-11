@@ -2,6 +2,8 @@ import { User } from '@prisma/client';
 import { IContext } from '../@types/common';
 import client from '../client';
 
+const LIMIT = 5;
+
 // computed fields
 export default {
   User: {
@@ -28,5 +30,9 @@ export default {
       });
       return Boolean(user);
     },
+    photos: ({ id }: User, { page }: { page: number }) =>
+      client.user
+        .findUnique({ where: { id } })
+        .photos({ skip: LIMIT * page, take: LIMIT }),
   },
 };

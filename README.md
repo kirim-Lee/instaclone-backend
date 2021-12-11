@@ -25,7 +25,7 @@ instaclone backend
 - [ ] 좋아요 보기
 - [ ] 피드 보기
 - [ ] 사진 찾기
-- [ ] 해시태그 보기
+- [x] 해시태그 보기
 
 ## Comments
 
