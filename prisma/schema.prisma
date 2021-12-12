@@ -25,6 +25,7 @@ model User {
   updatedAt DateTime @updatedAt
   photos Photo[]
   likes Like[]
+  comments Comment[]
 }
 
 model Photo {
@@ -37,6 +38,7 @@ model Photo {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt  
   likes Like[]
+  comments Comment[]
 }
 
 model Hashtag {
@@ -57,4 +59,15 @@ model Like {
   updatedAt DateTime @updatedAt
 
   @@unique([photoId, userId])
+}
+
+model Comment {
+  id Int @default(autoincrement()) @id
+  photo Photo @relation(fields: [photoId], references:[id])
+  photoId Int
+  user User @relation(fields: [userId], references: [id])
+  userId Int
+  payload String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt 
 }

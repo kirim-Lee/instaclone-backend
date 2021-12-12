@@ -26,9 +26,14 @@ instaclone backend
 - [x] 피드 보기
 - [x] 사진 찾기
 - [x] 해시태그 보기
+- [ ] 포토 코멘트 보기
 
 ## Comments
 
 - [ ] 사진에 코멘트
 - [ ] 코멘트 편집
 - [ ] 코멘트 삭제
+
+## Extra
+
+- [ ] S3 image upload
