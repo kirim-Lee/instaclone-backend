@@ -13,6 +13,9 @@ export default {
         where: { photos: { some: { id: photo.id } } },
       });
     },
+    totalLikes: (photo: Photo) => {
+      return client.like.count({ where: { photoId: photo.id } });
+    },
   },
   Hashtag: {
     photos: ({ id }: Hashtag, { page }: { page: number }) => {
