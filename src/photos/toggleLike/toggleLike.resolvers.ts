@@ -12,23 +12,20 @@ export default {
             throw new Error('photo is not founded');
           }
 
+          const photoUserId = { userId: loggedInUser.id, photoId: id };
+
           const like = await client.like.findUnique({
-            where: {
-              photoId_userId: {
-                userId: loggedInUser.id,
-                photoId: id,
-              },
-            },
+            where: { photoId_userId: photoUserId },
           });
 
           if (like) {
             // unlike
-            await client.like.delete({ where: { id: like.id } });
+            await client.like.delete({
+              where: { photoId_userId: photoUserId },
+            });
           } else {
             // like
-            await client.like.create({
-              data: { photoId: id, userId: loggedInUser.id },
-            });
+            await client.like.create({ data: photoUserId });
           }
 
           return { ok: true, isLiked: !Boolean(like) };
