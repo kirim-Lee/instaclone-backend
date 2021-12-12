@@ -30,7 +30,7 @@ instaclone backend
 
 ## Comments
 
-- [ ] 사진에 코멘트
+- [x] 사진에 코멘트
 - [ ] 코멘트 편집
 - [ ] 코멘트 삭제
 
