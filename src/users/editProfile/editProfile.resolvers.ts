@@ -26,7 +26,7 @@ export default {
           if (avatar) {
             const filename = await upload(avatar, loggedInUser.id.toString());
 
-            updateData.avatar = `/static/${filename}`;
+            updateData.avatar = filename;
           }
 
           if (hashed) {
