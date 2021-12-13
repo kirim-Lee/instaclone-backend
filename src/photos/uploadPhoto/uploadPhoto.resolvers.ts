@@ -13,7 +13,7 @@ export default {
   Mutation: {
     uploadPhoto: protect(
       async (_, { file, caption }: IArgs, { loggedInUser }) => {
-        const filename = await upload(file, loggedInUser.id);
+        const filename = await upload(file, loggedInUser.id, 'upload');
 
         return await client.photo.create({
           data: {

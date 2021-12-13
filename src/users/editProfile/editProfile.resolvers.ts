@@ -24,7 +24,11 @@ export default {
           const updateData: Partial<User> = user;
 
           if (avatar) {
-            const filename = await upload(avatar, loggedInUser.id.toString());
+            const filename = await upload(
+              avatar,
+              loggedInUser.id.toString(),
+              'avatar'
+            );
 
             updateData.avatar = filename;
           }

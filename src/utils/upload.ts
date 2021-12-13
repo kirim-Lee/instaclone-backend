@@ -20,9 +20,13 @@ AWS.config.update({
   },
 });
 
-const upload = async (file: Promise<FileUpload>, prefix: string | number) => {
+const upload = async (
+  file: Promise<FileUpload>,
+  prefix: string | number,
+  folderName: string
+) => {
   const result = await file;
-  const filename = `${prefix}-${Date.now()}-${result.filename}`;
+  const filename = `${folderName}/${prefix}-${Date.now()}-${result.filename}`;
   const s3 = new AWS.S3();
 
   const uploadResult = await s3
