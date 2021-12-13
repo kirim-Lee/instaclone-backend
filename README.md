@@ -31,8 +31,8 @@ instaclone backend
 ## Comments
 
 - [x] 사진에 코멘트
-- [ ] 코멘트 편집
-- [ ] 코멘트 삭제
+- [x] 코멘트 편집
+- [x] 코멘트 삭제
 
 ## Extra
 
