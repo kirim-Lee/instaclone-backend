@@ -13,8 +13,11 @@ export default {
         where: { photos: { some: { id: photo.id } } },
       });
     },
-    totalLikes: (photo: Photo) => {
-      return client.like.count({ where: { photoId: photo.id } });
+    totalLikes: ({ id }: Photo) => {
+      return client.like.count({ where: { photoId: id } });
+    },
+    totalComments: ({ id }: Photo) => {
+      return client.comment.count({ where: { photoId: id } });
     },
   },
   Hashtag: {
