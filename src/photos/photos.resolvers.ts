@@ -1,4 +1,5 @@
 import { Hashtag, Photo } from '@prisma/client';
+import { IContext } from '../@types/common';
 import client from '../client';
 
 const LIMIT = 5;
@@ -18,6 +19,9 @@ export default {
     },
     totalComments: ({ id }: Photo) => {
       return client.comment.count({ where: { photoId: id } });
+    },
+    isMine: ({ userId }: Photo, _: never, { loggedInUser }: IContext) => {
+      return userId === loggedInUser?.id;
     },
   },
   Hashtag: {
