@@ -1,3 +1,4 @@
+import { GraphQLResolveInfo } from 'graphql';
 import { IContext } from '../@types/common';
 import client from '../client';
 import { verify } from './sign';
@@ -26,9 +27,11 @@ type ResolverFn<T, R> = (
 
 export const protect =
   <T extends {}, R extends {}>(resolver: ResolverFn<T, R>) =>
-  (root: unknown, args: T, context: IContext, info: any) => {
+  (root: unknown, args: T, context: IContext, info: GraphQLResolveInfo) => {
     if (!context.loggedInUser) {
-      return { ok: false, error: 'you should login' };
+      const isQuery = info.operation.operation === 'query';
+
+      return isQuery ? null : { ok: false, error: 'you should login' };
     }
 
     return resolver(root, args, context, info);
