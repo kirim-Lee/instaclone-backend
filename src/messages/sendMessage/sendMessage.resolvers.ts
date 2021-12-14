@@ -16,6 +16,19 @@ const makeRoomByUserId = async (userId: number, loggedInUserId: number) => {
     throw Error('user not exist');
   }
 
+  const room = await client.room.findFirst({
+    where: {
+      AND: [
+        { users: { some: { id: userId } } },
+        { users: { some: { id: loggedInUserId } } },
+      ],
+    },
+  });
+
+  if (room) {
+    return room;
+  }
+
   return await client.room.create({
     data: {
       users: { connect: [{ id: userId }, { id: loggedInUserId }] },
