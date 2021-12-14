@@ -37,3 +37,10 @@ instaclone backend
 ## Extra
 
 - [x] S3 image upload
+
+## DMs
+
+- [ ] 방만들기
+- [ ] 방
+- [ ] 메세지 보내기
+- [ ] 실시간 메세지
