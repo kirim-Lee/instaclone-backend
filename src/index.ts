@@ -29,7 +29,10 @@ const startServer = async () => {
       subscribe,
       async onConnect(param: any) {
         const user = await getUser(param?.['jwt-token'] as string);
-        return user && { loggedInUser: user };
+        if (!user) {
+          throw Error('authenticate failed');
+        }
+        return { loggedInUser: user };
       },
     },
     {
