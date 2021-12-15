@@ -1,4 +1,6 @@
 import client from '../../client';
+import { NEW_MESSAGE } from '../../constants';
+import pubsub from '../../pubsub';
 import { protect } from '../../utils/user';
 
 interface IArgs {
@@ -54,13 +56,15 @@ export default {
             : null;
 
           if (room) {
-            await client.message.create({
+            const message = await client.message.create({
               data: {
                 payload,
                 roomId: room.id,
                 userId: loggedInUser.id,
               },
             });
+
+            await pubsub.publish(NEW_MESSAGE, { roomUpdates: message });
 
             return { ok: true };
           }

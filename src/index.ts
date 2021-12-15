@@ -12,14 +12,50 @@ import { IContext } from './@types/common';
 import schema from './schema';
 import { getUser } from './utils/user';
 import { graphqlUploadExpress } from 'graphql-upload';
+import { execute, subscribe } from 'graphql';
+import { SubscriptionServer } from 'subscriptions-transport-ws';
 
 const startServer = async () => {
+  const app = express();
+
+  const httpServer = createServer(app);
+
+  const subscriptionServer = SubscriptionServer.create(
+    {
+      // This is the `schema` we just created.
+      schema,
+      // These are imported from `graphql`.
+      execute,
+      subscribe,
+      async onConnect(param: any) {
+        const user = await getUser(param?.['jwt-token'] as string);
+        return user && { loggedInUser: user };
+      },
+    },
+    {
+      // This is the `httpServer` we created in a previous step.
+      server: httpServer,
+      // Pass a different path here if your ApolloServer serves at
+      // a different path.
+      path: '/graphql',
+    }
+  );
+
   const server = new ApolloServer({
     schema,
     plugins: [
       process.env.NODE_ENV === 'production'
         ? ApolloServerPluginLandingPageDisabled()
         : ApolloServerPluginLandingPageGraphQLPlayground(),
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              subscriptionServer.close();
+            },
+          };
+        },
+      },
     ],
     context: async ({ req }): Promise<IContext | null> => {
       const user = await getUser(req.headers['jwt-token'] as string);
@@ -28,10 +64,6 @@ const startServer = async () => {
   });
 
   await server.start();
-
-  const app = express();
-
-  const httpServer = createServer(app);
 
   app.use(graphqlUploadExpress());
   app.use('/static', express.static('upload'));
