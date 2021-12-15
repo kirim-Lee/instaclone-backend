@@ -1,4 +1,4 @@
-import { Room } from '@prisma/client';
+import { Room, Message } from '@prisma/client';
 import { IContext } from '../@types/common';
 import client from '../client';
 
@@ -24,5 +24,9 @@ export default {
         },
       });
     },
+  },
+  Message: {
+    user: ({ id }: Message) =>
+      client.message.findUnique({ where: { id } }).user(),
   },
 };
